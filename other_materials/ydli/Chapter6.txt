@@ -1,0 +1,22 @@
+-------------------------------------
+2021/3/12
+
+Chapter6 study
+
+1.Create deployment(multi pods) use labes
+
+$kubectl.exe run alpaca-prod --image=ydli/kuard:latest  --replicas=2 --labels="ver=1,app=alpaca,env=prod"
+
+$kubectl.exe run alpaca-test --image=ydli/kuard:latest  --replicas=1 --labels="ver=2,app=alpaca,env=test"
+
+$kubectl.exe run bandicoot-prod --image=ydli/kuard:latest  --replicas=2 --labels="ver=2,app=bandicoot,env=prod"
+
+$kubectl.exe run bandicoot-staging --image=ydli/kuard:latest  --replicas=1 --labels="ver=2,app=bandicoot,env=staging"
+
+2.Show deployment labels
+
+$kubectl get deployments --show-labels
+
+3.Motify labels
+
+$kubectl label pods alpaca
