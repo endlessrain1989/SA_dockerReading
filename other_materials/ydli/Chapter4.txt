@@ -43,6 +43,14 @@ $kubectl config get-contexts
 
 $kubectl config use-context demo-context
 
+7.Delete contexts
+
+$kubectl.exe config delete-context demo-context
+
+8.Delete namespace
+
+$kubectl delete namespace demo
+
 #Viewing Kubernetes API Objects
 
 1.Show pod ip

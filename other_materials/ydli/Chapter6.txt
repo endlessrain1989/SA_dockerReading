@@ -1,22 +1,102 @@
 -------------------------------------
-2021/3/12
+2021/3/18
 
 Chapter6 study
 
+#Applying Labels
+
 1.Create deployment(multi pods) use labes
 
-$kubectl.exe run alpaca-prod --image=ydli/kuard:latest  --replicas=2 --labels="ver=1,app=alpaca,env=prod"
+$kubectl.exe run alpaca-prod --image=ydli/kuard:latest --replicas=2 --labels="ver=1,app=alpaca,env=prod"
 
-$kubectl.exe run alpaca-test --image=ydli/kuard:latest  --replicas=1 --labels="ver=2,app=alpaca,env=test"
+$kubectl.exe run alpaca-test --image=ydli/kuard:20200309 --replicas=1 --labels="ver=2,app=alpaca,env=test"
 
-$kubectl.exe run bandicoot-prod --image=ydli/kuard:latest  --replicas=2 --labels="ver=2,app=bandicoot,env=prod"
+$kubectl.exe run bandicoot-prod --image=ydli/kuard:latest --replicas=2 --labels="ver=2,app=bandicoot,env=prod"
 
-$kubectl.exe run bandicoot-staging --image=ydli/kuard:latest  --replicas=1 --labels="ver=2,app=bandicoot,env=staging"
+$kubectl.exe run bandicoot-staging --image=ydli/kuard:latest --replicas=1 --labels="ver=2,app=bandicoot,env=staging"
 
 2.Show deployment labels
 
 $kubectl get deployments --show-labels
 
-3.Motify labels
+#Modifying Labels
 
-$kubectl label pods alpaca
+1.Motify label
+
+$kubectl label deployments alpaca-test "canary=true"
+
+2.Show label by field
+
+$kubectl get deployments -L canary
+
+#Label Selectors
+
+1.Show pods label
+
+$kubectl get pods --show-labels
+
+2.Laber Selectors
+
+$kubectl get pods --selector="ver=2"
+
+3.Laber Selectors(and)
+
+$kubectl get pods --selector="app=bandicoot,ver=2"
+
+4.Laber Selectors(include)
+
+$kubectl get pods --selector="app in (alpaca,bandicoot)"
+
+#Selector operators
+
+-------------------------------------
+
+key=value                   key is set to value
+
+key!=value                  key is not set to value
+
+key in (value1, value2)     key is one of value1 or value2
+
+key notin (value1, value2)  key is not one of value1 or value2
+
+key                         key is set
+
+!key                        key is not set
+
+-------------------------------------
+
+example:
+
+$kubectl get deployments --selector="canary"
+
+$kubectl get deployments --selector='!canary'
+
+$kubectl get pods -l 'ver=2,!canary'
+
+#Label Selectors in API Objects
+
+1.A selector of app=alpaca,ver in (1, 2) would be converted to this:
+
+selector:
+  matchLabels:
+    app: alpaca
+  matchExpressions:
+    - {key: ver, operator: In, values: [1, 2]}
+
+*** The only way to represent the != operator is to convert it to a NotIn expression with a single value***
+
+2.selector app=alpaca,ver=1
+
+selector:
+  app: alpaca
+  ver: 1
+
+#Annotations
+
+Annotations provide a place to store additional metadata for Kubernetes objects with the sole purpose of assisting tools and libraries.
+
+#Dening Annotations
+
+metadata:
+  annotations:
+  example.com/icon-url: "https://example.com/icon.png"

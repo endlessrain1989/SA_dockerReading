@@ -3,6 +3,8 @@
 
 Chapter5 study
 
+#Creating a Pod
+
 1.Use kubectl create pod
 
 $kubectl.exe run kuard --generator=run-pod/v1 --image=ydli/kuard:latest
@@ -17,17 +19,19 @@ $kubectl get pods
 
 $kubectl delete pods/kuard
 
-3.Create Pod Manifest file(kuard-pod.yaml)
+#Creating a Pod Manifest
 
-4.Run Pod
+1.Create Pod Manifest file(kuard-pod.yaml)
+
+#Running Pods
 
 $kubectl apply -f kuard-pod.yaml
 
-5.Show pod list
+#Listing Pods
 
 $kubectl get pods
 
-6.Show pod detail imformation
+#Pod Details
 
 $kubectl describe pods kuard
 
@@ -37,25 +41,25 @@ $kubectl describe pods kuard -o json
 
 $kubectl describe pods kuard -o yaml
 
-7.Delete pod
+#Deleting a Pod
 
 $kubectl delete pods/kuard
 
 $kubectl delete -f kuard-pod.yaml
 
-8.Port foward
+#Using Port Forwarding
 
 $kubectl port-forward kuard 8080:8080
 
-9.Show pod log
+#Getting More Info with Logs
 
 $kubectl logs kuard
 
-10.Exec command in container
+#Running Commands in Your Container with exec
 
 $kubectl exec kuard -- date
 
-11.Copy file
+#Copying Files to and from Containers
 
 $kubectl.exe cp .\azure-vote.yaml kuard:/tmp/test.yaml
 
@@ -63,30 +67,34 @@ $kubectl exec kuard -- ls /tmp/
 
 $kubectl.exe cp kuard:/tmp/test.yaml .
 
-12.Health check(Create kuard-pod-health.yaml file for liveness)
+#Health check(Create kuard-pod-health.yaml file for liveness)
 
-13.Run Pod
+#Liveness Probe
+
+1.Run Pod
 
 $kubectl apply -f kuard-pod-health.yaml
 
-14.Port foward
+2.Port foward
 
 $kubectl port-forward kuard 8080:8080
 
-15.Resource request(Create kuard-pod-resreq.yaml file for request)
+#Resource Management
+
+1.Resource Requests: Minimum Required Resources(Create kuard-pod-resreq.yaml file for request)
 
 ***request cpu:0.5 core, memory: 128MB***
 
-16.Resource limit(Create kuard-pod-reslim.yaml file for limit)
+2.Capping Resource Usage with Limits(Create kuard-pod-reslim.yaml file for limit)
 
 ***request cpu:0.5 core, memory: 128MB ; limit cpu:1 core, memory: 256MB***
 
-17.Mount volume(Create kuard-pod-vol.yaml file for mount)
+#Persisting Data with Volumes(Create kuard-pod-vol.yaml file for mount)
 
 $kubectl apply -f kuard-pod-vol.yaml
 
-18.Nfs(Create kuard-pod-vol.yaml file for nfs)
+#Persisting Data Using Remote Disks(Create kuard-pod-vol.yaml file for nfs)
 
-19.Many resources pod manifest example(Create kuard-pod-full.yaml file)
+#Putting It All Together(Create kuard-pod-full.yaml file)
 
 $kubectl apply -f kuard-pod-full.yaml
